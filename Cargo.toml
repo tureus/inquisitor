@@ -1,0 +1,15 @@
+[package]
+name = "inquisitor"
+version = "0.1.0"
+authors = ["Xavier Lange <xrlange@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+tokio = "0.1.13"
+reqwest = "0.9.5"
+http = "0.1.14"
+serde = "1.0.82"
+serde_derive = "1.0.82"
+serde_json = "1.0.33"
+futures = "0.1.25"
+hashbrown = { version = "0.1.7", features = ["serde"] }
