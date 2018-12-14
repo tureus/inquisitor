@@ -28,8 +28,8 @@ fn request() -> impl Future<Item=(), Error=()> {
         .build().unwrap();
 
     client
-//        .post("https://nginx-ingress-nlb.nginx-ingress")
-        .post("https://metrics-dev.interactivedatastore.viasat.io/xavier-bomb")
+        .post("https://nginx-ingress-nlb.nginx-ingress")
+//        .post("https://metrics-dev.interactivedatastore.viasat.io/xavier-bomb")
         .body(body)
         .basic_auth("elastic", Some("Dumb1234"))
         .header("HOST", "metrics-dev.interactivedatastore.viasat.io")
