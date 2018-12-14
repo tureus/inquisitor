@@ -1,4 +1,5 @@
 #![feature(uniform_paths,slice_concat_ext)]
+#![recursion_limit="128"]
 use reqwest::r#async::*;
 use futures::prelude::*;
 #[macro_use] extern crate serde_derive;
@@ -41,10 +42,8 @@ fn request() -> impl Future<Item=(), Error=()> {
 }
 
 fn a_bunch_of_requests() -> impl Future<Item=(), Error=()> {
-    let a = request();
-    let b = request();
-    let c = request();
-    a.join(b).join(c).map(|_| ())
+
+    request().join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).map(|_| ())
 }
 
 fn main() {
