@@ -22,12 +22,15 @@ fn request() -> impl Future<Item=(), Error=()> {
         .collect();
     let body = lines.join("\n");
 
-    let client = ClientBuilder::new().danger_accept_invalid_certs(true).build().unwrap();
+    let client = ClientBuilder::new()
+        .danger_accept_invalid_certs(true)
+        .build().unwrap();
 
     client
-        .post("https://metrics-dev.interactivedatastore.viasat.io")
+        .post("https://nginx-ingress-nlb.nginx-ingress")
         .body(body)
         .basic_auth("elastic", Some("Dumb1234"))
+        .header("HOST", "metrics-dev.interactivedatastore.viasat.io")
         .send()
         .and_then(|mut res| {
             let body = mem::replace(res.body_mut(), Decoder::empty());
