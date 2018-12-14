@@ -28,10 +28,12 @@ fn request() -> impl Future<Item=(), Error=()> {
         .build().unwrap();
 
     client
-        .post("https://nginx-ingress-nlb.nginx-ingress")
+//        .post("https://nginx-ingress-nlb.nginx-ingress")
+        .post("https://metrics-dev.interactivedatastore.viasat.io/xavier-bomb")
         .body(body)
         .basic_auth("elastic", Some("Dumb1234"))
         .header("HOST", "metrics-dev.interactivedatastore.viasat.io")
+        .header("Content-Type","application/x-ndjson")
         .send()
         .and_then(|mut res| {
             let body = mem::replace(res.body_mut(), Decoder::empty());
@@ -42,10 +44,11 @@ fn request() -> impl Future<Item=(), Error=()> {
 }
 
 fn a_bunch_of_requests() -> impl Future<Item=(), Error=()> {
-
-    request().join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).map(|_| ())
+        request().join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).join(request()).map(|_| ())
 }
 
 fn main() {
-    tokio::run(a_bunch_of_requests());
+    for _ in 1..100 {
+        tokio::run(a_bunch_of_requests());
+    }
 }
