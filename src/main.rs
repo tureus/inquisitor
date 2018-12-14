@@ -22,9 +22,10 @@ fn request() -> impl Future<Item=(), Error=()> {
         .collect();
     let body = lines.join("\n");
 
-    Client::new()
+    let client = ClientBuilder::new().danger_accept_invalid_certs(true).build().unwrap();
+
+    client
         .post("https://metrics-dev.interactivedatastore.viasat.io")
-        .danger_accept_invalid_certs(true)
         .body(body)
         .basic_auth("elastic", Some("Dumb1234"))
         .send()
