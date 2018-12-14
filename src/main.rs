@@ -24,6 +24,7 @@ fn request() -> impl Future<Item=(), Error=()> {
 
     Client::new()
         .post("https://metrics-dev.interactivedatastore.viasat.io")
+        .danger_accept_invalid_certs(true)
         .body(body)
         .basic_auth("elastic", Some("Dumb1234"))
         .send()
