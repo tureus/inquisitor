@@ -34,7 +34,7 @@ fn request() -> impl Future<Item=(), Error=()> {
         .build().unwrap();
 
     client
-        .post("https://nginx-ingress-nlb.nginx-ingress/xavier-bomb/_bulk")
+        .post("https://nginx-ingress-nlb.nginx-ingress/_bulk")
 //        .post("https://metrics-dev.interactivedatastore.viasat.io/xavier-bomb/_bulk")
         .body(with_cmds.join("\n"))
         .basic_auth("elastic", Some("Dumb1234"))
