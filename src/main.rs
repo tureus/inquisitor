@@ -12,7 +12,7 @@ use data_builder::JSONDataBuilder;
 use std::slice::SliceConcatExt;
 
 fn request() -> impl Future<Item=(), Error=()> {
-    let data = data_builder::MetricDataBuilder::new(30*1024*1024);
+    let data = data_builder::MetricDataBuilder::new(1*1024);
 //    println!("data: {}", unsafe { String::from_utf8_unchecked(data.get_blob()) });
     let json : Vec<data_builder::MetricData> = data.json();
     let lines: Vec<String> = json
@@ -34,8 +34,8 @@ fn request() -> impl Future<Item=(), Error=()> {
         .build().unwrap();
 
     client
-        .post("https://nginx-ingress-nlb.nginx-ingress/_bulk")
-//        .post("https://metrics-dev.interactivedatastore.viasat.io/xavier-bomb/_bulk")
+//        .post("https://nginx-ingress-nlb.nginx-ingress/_bulk")
+        .post("https://metrics-dev.interactivedatastore.viasat.io/xavier-bomb/_bulk")
         .body(with_cmds.join("\n") + "\n")
         .basic_auth("elastic", Some("Dumb1234"))
         .header("HOST", "metrics-dev.interactivedatastore.viasat.io")
@@ -54,7 +54,7 @@ fn a_bunch_of_requests() -> impl Future<Item=(), Error=()> {
 }
 
 fn main() {
-    for _ in 1..100 {
+    for _ in 1..2 {
         tokio::run(a_bunch_of_requests());
     }
 }

@@ -23,7 +23,7 @@ impl MetricData {
         let tag_vec = vec![
             ("nice.metric".to_owned(), 1.0f64),
             ("how.about.pi".to_owned(), 3.14f64),
-            ("yes.please.i.like.nesting".to_owned(), 1000000f64),
+            ("yes.please.i.like.nesting.hmm".to_owned(), 1000000f64),
             ("yes.please.i.like.nesting.more".to_owned(), 1000000f64),
             ("yes.please.i.like.nesting.more2".to_owned(), 1000000f64),
             ("yes.please.i.like.nesting.more100".to_owned(), 1000000f64),
