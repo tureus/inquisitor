@@ -62,7 +62,5 @@ fn main() {
 
     let es_client = ESClient::new(arg.arg_url, arg.flag_host );
 
-    for _ in 1.. {
-        tokio::run(a_bunch_of_requests(es_client.clone(), rc_comp.clone(), arg.flag_concurrency));
-    }
+    tokio::run(a_bunch_of_requests(es_client.clone(), rc_comp.clone(), arg.flag_concurrency));
 }
