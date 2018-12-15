@@ -21,16 +21,22 @@ fn request() -> impl Future<Item=(), Error=()> {
             serde_json::to_string(x).unwrap()
         })
         .collect();
-    let body = lines.join("\n");
+
+    let mut with_cmds : Vec<String> = Vec::with_capacity(lines.len() * 2);
+
+    for line in lines {
+        with_cmds.push(r#"{ "index" : { "_index" : "xavier-bomb", "_type" : "_doc" } }"#.to_owned());
+        with_cmds.push(line);
+    }
 
     let client = ClientBuilder::new()
         .danger_accept_invalid_certs(true)
         .build().unwrap();
 
     client
-        .post("https://nginx-ingress-nlb.nginx-ingress")
-//        .post("https://metrics-dev.interactivedatastore.viasat.io/xavier-bomb")
-        .body(body)
+        .post("https://nginx-ingress-nlb.nginx-ingress/xavier-bomb/_bulk")
+//        .post("https://metrics-dev.interactivedatastore.viasat.io/xavier-bomb/_bulk")
+        .body(with_cmds.join("\n"))
         .basic_auth("elastic", Some("Dumb1234"))
         .header("HOST", "metrics-dev.interactivedatastore.viasat.io")
         .header("Content-Type","application/x-ndjson")
